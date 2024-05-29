@@ -110,4 +110,4 @@ media/
 *.pid
 
 .idea
-/.dbdata
+.dbdata
