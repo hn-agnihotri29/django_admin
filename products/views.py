@@ -44,3 +44,16 @@ class ProductGenericAPIView(
         return self.destroy(request, pk)
 
 
+class FileUploadView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser,)
+
+    def post(self, request):
+        file = request.FILES['image']
+        file_name = default_storage.save(file.name, file)
+        url = default_storage.url(file_name)
+
+        return Response({
+            'url': 'http://localhost:8000/api' + url
+        })
