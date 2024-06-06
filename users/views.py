@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from admin.pagination import CustomPagination
 from .models import User, Permission, Role
 from .authentication import generate_access_token, JWTAuthentication
+from .permissions import ViewPermissions
 from .serializers import UserSerializer, PermissionSerializer, RoleSerializer
 
 #get ---> get combine 2 methods one in single and other one in multiple objects seperate them  with list method
@@ -86,7 +87,7 @@ class PermissionAPIView(APIView):
 
 class RoleViewSet(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
     permission_object = 'roles'
 
     #getting the list of objects
@@ -135,7 +136,8 @@ class UserGenericAPIView(
     mixins.UpdateModelMixin, mixins.DestroyModelMixin
                          ):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
+    permission_object = 'users'
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = CustomPagination
