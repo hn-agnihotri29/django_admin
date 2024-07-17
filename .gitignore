@@ -14,6 +14,7 @@ __pycache__/
 .dbdata
 /.dbdata
 .idea/
+/.idea
 env/
 build/
 develop-eggs/
